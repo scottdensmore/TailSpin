@@ -1,0 +1,6 @@
+[submodule "Extenrnal/asi-http-request"]
+	path = External/asi-http-request
+	url = git://github.com/pokeb/asi-http-request.git
+[submodule "external/asi-http-request"]
+	path = external/asi-http-request
+	url = git://github.com/pokeb/asi-http-request.git
