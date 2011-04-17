@@ -7,3 +7,6 @@
 [submodule "external/json-framework"]
 	path = external/json-framework
 	url = git://github.com/stig/json-framework.git
+[submodule "external/fmdb"]
+	path = external/fmdb
+	url = git://github.com/ccgus/fmdb.git
