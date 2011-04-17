@@ -4,3 +4,6 @@
 [submodule "external/asi-http-request"]
 	path = external/asi-http-request
 	url = git://github.com/pokeb/asi-http-request.git
+[submodule "external/json-framework"]
+	path = external/json-framework
+	url = git://github.com/stig/json-framework.git
