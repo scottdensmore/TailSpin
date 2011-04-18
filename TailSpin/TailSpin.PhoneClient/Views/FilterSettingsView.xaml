@@ -1,0 +1,93 @@
+﻿<!--
+===============================================================================
+ Microsoft patterns & practices
+ Windows Phone 7 Developer Guide
+===============================================================================
+ Copyright © Microsoft Corporation.  All rights reserved.
+ This code released under the terms of the 
+ Microsoft patterns & practices license (http://wp7guide.codeplex.com/license)
+===============================================================================
+-->
+
+<phone:PhoneApplicationPage 
+    x:Class="TailSpin.PhoneClient.Views.FilterSettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+    xmlns:prismInteractivity="clr-namespace:Microsoft.Practices.Prism.Interactivity;assembly=Microsoft.Practices.Prism.Interactivity" 
+    xmlns:prismInteractionRequest="clr-namespace:Microsoft.Practices.Prism.Interactivity.InteractionRequest;assembly=Microsoft.Practices.Prism.Interactivity" FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=FilterSettingsViewModel}"
+    SupportedOrientations="PortraitOrLandscape"
+    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True">
+
+    <!--Application Bar-->
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsMenuEnabled="True" IsVisible="True" Opacity="1.0">
+            <shell:ApplicationBarIconButton Text="Save" IconUri="/Resources/Images/AppBar/appbar.save.rest.png" />
+            <shell:ApplicationBarIconButton Text="Cancel" IconUri="/Resources/Images/AppBar/appbar.cancel.rest.png"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+    <i:Interaction.Triggers>
+        <prismInteractionRequest:InteractionRequestTrigger SourceObject="{Binding SubmitErrorInteractionRequest}" >
+            <prismInteractionRequest:MessageBoxAction />            
+        </prismInteractionRequest:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+    <i:Interaction.Behaviors>
+        <prismInteractivity:ApplicationBarButtonCommand ButtonText="Save" CommandBinding="{Binding SaveCommand}"/>
+        <prismInteractivity:ApplicationBarButtonNavigation ButtonText="Cancel" NavigateTo="#GoBack" />
+    </i:Interaction.Behaviors>
+     
+
+    <!--Layout Grid-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="24,24,0,12">
+            <TextBlock x:Name="ApplicationTitle" Text="TAILSPIN SURVEYS" Style="{StaticResource PhoneTextNormalStyle}" Margin="0,0,12,0" />
+            <TextBlock x:Name="PageTitle" Text="Filters" Margin="0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--Content Grid-->
+        <Grid x:Name="ContentGrid" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <ScrollViewer Grid.Row="0">
+                <ItemsControl Margin="25,15,5,5">
+                    <TextBlock Height="Auto" HorizontalAlignment="Left" Margin="0,8,0,0" Name="tenantsTextBlock" Text="Tenants" VerticalAlignment="Top" DataContext="{Binding}" />
+                    <ItemsControl ItemsSource="{Binding Tenants}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox Content="{Binding Name}" IsChecked="{Binding IncludeInFilter, Mode=TwoWay}" IsTabStop="True" HorizontalAlignment="Left" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                  
+                </ItemsControl>
+            </ScrollViewer>         
+            
+            
+            <ProgressBar Grid.Row="2"
+                     Height="4" 
+                     Name="progressBar" 
+                     VerticalAlignment="Bottom"
+                     HorizontalAlignment="Stretch"
+                     IsIndeterminate="{Binding IsSyncing}" />
+            
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>

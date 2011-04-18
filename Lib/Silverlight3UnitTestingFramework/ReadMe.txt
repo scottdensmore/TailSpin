@@ -1,0 +1,2 @@
+Place Silverlight Unit Test Framework Library assemblies in this folder. (Microsoft.Silverlight.Testing.dll & Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll)
+You can download this at http://www.jeff.wilcox.name/2010/05/sl3-utf-bits/

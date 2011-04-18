@@ -1,0 +1,85 @@
+﻿<!--
+===============================================================================
+ Microsoft patterns & practices
+ Windows Phone 7 Developer Guide
+===============================================================================
+ Copyright © Microsoft Corporation.  All rights reserved.
+ This code released under the terms of the 
+ Microsoft patterns & practices license (http://wp7guide.codeplex.com/license)
+===============================================================================
+-->
+
+<phone:PhoneApplicationPage 
+    x:Class="TailSpin.PhoneClient.Views.TakeSurvey.TakeSurveyView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:phoneControls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:phoneNavigation="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Views="clr-namespace:TailSpin.PhoneClient.Views.TakeSurvey"     
+    xmlns:Custom="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:Converters="clr-namespace:TailSpin.PhoneClient.Resources.Converters" 
+    xmlns:prismInteractivity="clr-namespace:Microsoft.Practices.Prism.Interactivity;assembly=Microsoft.Practices.Prism.Interactivity" 
+    xmlns:prismViewModel="clr-namespace:Microsoft.Practices.Prism.ViewModel;assembly=Microsoft.Practices.Prism" 
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=TakeSurveyViewModel}"
+    SupportedOrientations="PortraitOrLandscape"  Orientation="Portrait"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
+    shell:SystemTray.IsVisible="True">
+
+    <!--Application Bar-->
+    <phoneNavigation:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" >
+            <shell:ApplicationBarIconButton Text="Save" IconUri="/Resources/Images/AppBar/appbar.save.rest.png" />
+            <shell:ApplicationBarIconButton Text="Complete" IconUri="/Resources/Images/AppBar/appbar.check.rest.png" />
+        </shell:ApplicationBar>
+    </phoneNavigation:PhoneApplicationPage.ApplicationBar>
+    <Custom:Interaction.Behaviors>
+        <prismInteractivity:ApplicationBarButtonCommand ButtonText="Save" CommandBinding="{Binding SaveCommand}"/>
+        <prismInteractivity:ApplicationBarButtonCommand ButtonText="Complete" CommandBinding="{Binding CompleteCommand}"/>
+    </Custom:Interaction.Behaviors>
+
+    <!--Panorama-->
+    <phoneControls:Panorama
+            SelectionChanged="PanoramaSelectionChanged"
+            Loaded="PanoramaLoaded"
+            VerticalAlignment="Top"
+            Name="panorama" Margin="0,0,0,0"
+            ItemsSource="{Binding Questions}">
+        <phoneControls:Panorama.ItemTemplate>
+            <DataTemplate>
+                <ScrollViewer>
+                    <prismViewModel:DataTemplateSelector Content="{Binding}" Grid.Row="0" VerticalAlignment="Top"
+                                    HorizontalContentAlignment="Left" IsTabStop="False">
+                        <prismViewModel:DataTemplateSelector.Resources>
+                            <DataTemplate x:Key="OpenQuestionViewModel">
+                                <Views:OpenQuestionView DataContext="{Binding}"/>
+                            </DataTemplate>
+                            <DataTemplate x:Key="MultipleChoiceQuestionViewModel">
+                                <Views:MultipleChoiceQuestionView DataContext="{Binding}"/>
+                            </DataTemplate>
+                            <DataTemplate x:Key="FiveStarsQuestionViewModel">
+                                <Views:FiveStarsQuestionView DataContext="{Binding}"/>
+                            </DataTemplate>
+                            <DataTemplate x:Key="PictureQuestionViewModel">
+                                <Views:PictureQuestionView DataContext="{Binding}"/>
+                            </DataTemplate>
+                            <DataTemplate x:Key="VoiceQuestionViewModel">
+                                <Views:VoiceQuestionView DataContext="{Binding}"/>
+                            </DataTemplate>
+                        </prismViewModel:DataTemplateSelector.Resources>
+                    </prismViewModel:DataTemplateSelector>
+                </ScrollViewer>
+            </DataTemplate>
+        </phoneControls:Panorama.ItemTemplate>
+        <phoneControls:Panorama.HeaderTemplate>
+            <DataTemplate>
+                <Canvas Width="0" Height="0"/>
+            </DataTemplate>
+        </phoneControls:Panorama.HeaderTemplate>
+    </phoneControls:Panorama>
+
+</phone:PhoneApplicationPage>

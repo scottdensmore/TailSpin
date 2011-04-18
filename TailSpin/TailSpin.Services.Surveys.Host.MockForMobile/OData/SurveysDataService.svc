@@ -1,0 +1,3 @@
+﻿
+
+<%@ ServiceHost Language="C#" Factory="TailSpin.Services.Surveys.OData.CustomDataServiceHostFactory, TailSpin.Services.Surveys" Service="TailSpin.Services.Surveys.OData.SurveysDataService" %>

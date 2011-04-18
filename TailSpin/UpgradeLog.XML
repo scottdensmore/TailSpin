@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="TailSpin">
+</Property><Property Name="Solution File" Value="D:\WP7Guide\SourceCode\TailSpin\TailSpin.sln">
+</Property><Property Name="Date" Value="Thursday, April 14, 2011">
+</Property><Property Name="Time" Value="20:59 PM">
+</Property></Properties><Event ErrorLevel="0" Project="D:\WP7Guide\SourceCode\TailSpin\TailSpin.Cloud\TailSpin.Cloud.ccproj" Source="TailSpin.Cloud\ServiceDefinition.csdef" Description="Added Sites element to the web role 'TailSpin.Web'.">
+</Event><Event ErrorLevel="0" Project="D:\WP7Guide\SourceCode\TailSpin\TailSpin.Cloud\TailSpin.Cloud.ccproj" Source="TailSpin.Cloud\ServiceDefinition.csdef" Description="Added Sites element to the web role 'TailSpin.Web.Survey.Public'.">
+</Event><Event ErrorLevel="0" Project="D:\WP7Guide\SourceCode\TailSpin\TailSpin.Cloud\TailSpin.Cloud.ccproj" Source="TailSpin.Cloud\ServiceDefinition.csdef" Description="Added Sites element to the web role 'TailSpin.Services.Surveys.Host.Azure'.">
+</Event><Event ErrorLevel="0" Project="D:\WP7Guide\SourceCode\TailSpin\TailSpin.Cloud\TailSpin.Cloud.ccproj" Source="TailSpin.Cloud\ServiceDefinition.csdef" Description="Added Endpoints element to the web role 'TailSpin.Web'.">
+</Event><Event ErrorLevel="0" Project="D:\WP7Guide\SourceCode\TailSpin\TailSpin.Cloud\TailSpin.Cloud.ccproj" Source="TailSpin.Cloud\ServiceDefinition.csdef" Description="Added Endpoints element to the web role 'TailSpin.Web.Survey.Public'.">
+</Event><Event ErrorLevel="0" Project="D:\WP7Guide\SourceCode\TailSpin\TailSpin.Cloud\TailSpin.Cloud.ccproj" Source="TailSpin.Cloud\ServiceDefinition.csdef" Description="Added Endpoints element to the web role 'TailSpin.Services.Surveys.Host.Azure'.">
+</Event><Event ErrorLevel="3" Project="D:\WP7Guide\SourceCode\TailSpin\TailSpin.Cloud\TailSpin.Cloud.ccproj" Source="TailSpin.Cloud\ServiceDefinition.csdef" Description="Converted">
+</Event><Event ErrorLevel="0" Project="D:\WP7Guide\SourceCode\TailSpin\TailSpin.Cloud\TailSpin.Cloud.ccproj" Source="TailSpin.Cloud\TailSpin.Cloud.ccproj" Description="Upgraded ProductVersion value to 1.3.0.">
+</Event><Event ErrorLevel="0" Project="TailSpin.Web" Source="TailSpin.Web\TailSpin.Web.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="TailSpin.Web" Source="TailSpin.Web\TailSpin.Web.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="TailSpin.Web.Tests" Source="TailSpin.Web.Tests\TailSpin.Web.Tests.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="TailSpin.Web.Tests" Source="TailSpin.Web.Tests\TailSpin.Web.Tests.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="Samples.Web.ClaimsUtillities" Source="..\Shared\Samples.Web.ClaimsUtillities\Samples.Web.ClaimsUtillities.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="Samples.Web.ClaimsUtillities" Source="..\Shared\Samples.Web.ClaimsUtillities\Samples.Web.ClaimsUtillities.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="Adatum.SimulatedIssuer.wp7" Source="..\Shared\Adatum.SimulatedIssuer.wp7\Adatum.SimulatedIssuer.wp7.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="Adatum.SimulatedIssuer.wp7" Source="..\Shared\Adatum.SimulatedIssuer.wp7\Adatum.SimulatedIssuer.wp7.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="TailSpin.SimulatedIssuer.wp7" Source="..\Shared\TailSpin.SimulatedIssuer.wp7\TailSpin.SimulatedIssuer.wp7.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="TailSpin.SimulatedIssuer.wp7" Source="..\Shared\TailSpin.SimulatedIssuer.wp7\TailSpin.SimulatedIssuer.wp7.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="TailSpin.Web.AcceptanceTests" Source="TailSpin.Web.AcceptanceTests\TailSpin.Web.AcceptanceTests.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="TailSpin.Web.AcceptanceTests" Source="TailSpin.Web.AcceptanceTests\TailSpin.Web.AcceptanceTests.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="TailSpin.Web.Survey.Public" Source="TailSpin.Web.Survey.Public\TailSpin.Web.Survey.Public.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="TailSpin.Web.Survey.Public" Source="TailSpin.Web.Survey.Public\TailSpin.Web.Survey.Public.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="TailSpin.Web.Survey.Public.Tests" Source="TailSpin.Web.Survey.Public.Tests\TailSpin.Web.Survey.Public.Tests.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="TailSpin.Web.Survey.Public.Tests" Source="TailSpin.Web.Survey.Public.Tests\TailSpin.Web.Survey.Public.Tests.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="TailSpin.Web.Survey.Shared" Source="TailSpin.Web.Survey.Shared\TailSpin.Web.Survey.Shared.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="TailSpin.Web.Survey.Shared" Source="TailSpin.Web.Survey.Shared\TailSpin.Web.Survey.Shared.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="TailSpin.Web.Survey.Shared.Tests" Source="TailSpin.Web.Survey.Shared.Tests\TailSpin.Web.Survey.Shared.Tests.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="TailSpin.Web.Survey.Shared.Tests" Source="TailSpin.Web.Survey.Shared.Tests\TailSpin.Web.Survey.Shared.Tests.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="TailSpin.Workers.Surveys" Source="TailSpin.Workers.Surveys\TailSpin.Workers.Surveys.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="TailSpin.Workers.Surveys" Source="TailSpin.Workers.Surveys\TailSpin.Workers.Surveys.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="TailSpin.Workers.Surveys.Tests" Source="TailSpin.Workers.Surveys.Tests\TailSpin.Workers.Surveys.Tests.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="TailSpin.Workers.Surveys.Tests" Source="TailSpin.Workers.Surveys.Tests\TailSpin.Workers.Surveys.Tests.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="Fabrikam.SimulatedIssuer.wp7" Source="..\Shared\Fabrikam.SimulatedIssuer.wp7\Fabrikam.SimulatedIssuer.wp7.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="Fabrikam.SimulatedIssuer.wp7" Source="..\Shared\Fabrikam.SimulatedIssuer.wp7\Fabrikam.SimulatedIssuer.wp7.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="TailSpin.PhoneClient" Source="TailSpin.PhoneClient\TailSpin.PhoneClient.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="TailSpin.PhoneClient" Source="TailSpin.PhoneClient\TailSpin.PhoneClient.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="TailSpin.Workers.Notifications" Source="TailSpin.Workers.Notifications\TailSpin.Workers.Notifications.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="TailSpin.Workers.Notifications" Source="TailSpin.Workers.Notifications\TailSpin.Workers.Notifications.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="TailSpin.Workers.Notifications.Tests" Source="TailSpin.Workers.Notifications.Tests\TailSpin.Workers.Notifications.Tests.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="TailSpin.Workers.Notifications.Tests" Source="TailSpin.Workers.Notifications.Tests\TailSpin.Workers.Notifications.Tests.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="TailSpin.PhoneClient.Tests" Source="TailSpin.PhoneClient.Tests\TailSpin.PhoneClient.Tests.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="TailSpin.PhoneClient.Tests" Source="TailSpin.PhoneClient.Tests\TailSpin.PhoneClient.Tests.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="TailSpin.Services.Surveys" Source="TailSpin.Services.Surveys\TailSpin.Services.Surveys.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="TailSpin.Services.Surveys" Source="TailSpin.Services.Surveys\TailSpin.Services.Surveys.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="TailSpin.Services.Surveys.Tests" Source="TailSpin.Services.Surveys.Tests\TailSpin.Services.Surveys.Tests.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="TailSpin.Services.Surveys.Tests" Source="TailSpin.Services.Surveys.Tests\TailSpin.Services.Surveys.Tests.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="TailSpin.Services.Surveys.Host.Azure" Source="TailSpin.Services.Surveys.Host.Azure\TailSpin.Services.Surveys.Host.Azure.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="TailSpin.Services.Surveys.Host.Azure" Source="TailSpin.Services.Surveys.Host.Azure\TailSpin.Services.Surveys.Host.Azure.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="Prism" Source="..\Prism\Prism\Prism.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="Prism" Source="..\Prism\Prism\Prism.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="Prism.Interactivity" Source="..\Prism\Prism.Interactivity\Prism.Interactivity.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="Prism.Interactivity" Source="..\Prism\Prism.Interactivity\Prism.Interactivity.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="" Source="TailSpin.sln" Description="The solution file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="" Source="TailSpin.sln" Description="No Conversion Required">
+</Event></UpgradeLog>

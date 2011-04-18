@@ -1,0 +1,46 @@
+﻿<!--
+===============================================================================
+ Microsoft patterns & practices
+ Windows Phone 7 Developer Guide
+===============================================================================
+ Copyright © Microsoft Corporation.  All rights reserved.
+ This code released under the terms of the 
+ Microsoft patterns & practices license (http://wp7guide.codeplex.com/license)
+===============================================================================
+-->
+
+<UserControl x:Class="TailSpin.PhoneClient.Views.TakeSurvey.OpenQuestionView"
+    x:Name="View" Width="420"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:infra ="clr-namespace:MVVM.Client.Infrastructure.Behaviors" 
+    xmlns:Interactivity="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+    xmlns:prism="clr-namespace:Microsoft.Practices.Prism.Interactivity;assembly=Microsoft.Practices.Prism.Interactivity" mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    Background="Transparent">
+
+    <!--Layout Stack Panel-->
+    <StackPanel Orientation="Vertical" Width="{Binding Width, ElementName=View}">
+        
+        <!--Question Text-->
+        <TextBlock 
+                            VerticalAlignment="Top"
+                            Margin="30,0,30,0"
+                            Style="{StaticResource PhoneTextExtraLargeStyle}"
+                            Foreground="{StaticResource PhoneForegroundBrush}"
+                            Text="{Binding Path=QuestionText}"
+                            TextWrapping="Wrap"
+                            />
+        
+        <!--Answer Textbox-->
+        <TextBox Text="{Binding AnswerText, Mode=TwoWay}">
+            <Interactivity:Interaction.Behaviors>
+                <prism:UpdateTextBindingOnPropertyChanged/>
+            </Interactivity:Interaction.Behaviors>
+        </TextBox>
+    </StackPanel>
+</UserControl>

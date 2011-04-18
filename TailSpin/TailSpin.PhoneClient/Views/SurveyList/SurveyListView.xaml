@@ -1,0 +1,139 @@
+﻿<!--
+===============================================================================
+ Microsoft patterns & practices
+ Windows Phone 7 Developer Guide
+===============================================================================
+ Copyright © Microsoft Corporation.  All rights reserved.
+ This code released under the terms of the 
+ Microsoft patterns & practices license (http://wp7guide.codeplex.com/license)
+===============================================================================
+-->
+
+<phone:PhoneApplicationPage
+    x:Class="TailSpin.PhoneClient.Views.SurveyList.SurveyListView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:phoneControls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:phoneNavigation="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:pag="clr-namespace:TailSpin.PhoneClient.Infrastructure"
+    xmlns:Custom="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:converters="clr-namespace:TailSpin.PhoneClient.Resources.Converters" 
+    xmlns:prismInteractionRequest="clr-namespace:Microsoft.Practices.Prism.Interactivity.InteractionRequest;assembly=Microsoft.Practices.Prism.Interactivity" 
+    xmlns:prismInteractivity="clr-namespace:Microsoft.Practices.Prism.Interactivity;assembly=Microsoft.Practices.Prism.Interactivity"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=SurveyListViewModel}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
+    shell:SystemTray.IsVisible="True" >
+
+    <!--Application Bar-->
+    <phoneNavigation:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True">
+            <shell:ApplicationBarIconButton Text="Sync" IconUri="/Resources/Images/AppBar/appbar.sync.rest.png" />
+            <shell:ApplicationBarIconButton Text="Settings" IconUri="/Resources/Images/AppBar/appbar.feature.settings.rest.png" />
+            <shell:ApplicationBarIconButton Text="Filters" IconUri="/Resources/Images/AppBar/appbar.filter.rest.png"/>
+        </shell:ApplicationBar>
+    </phoneNavigation:PhoneApplicationPage.ApplicationBar>
+    
+    <Custom:Interaction.Behaviors>
+        <prismInteractivity:ApplicationBarButtonCommand ButtonText="Sync" CommandBinding="{Binding StartSyncCommand}"/>
+        <prismInteractivity:ApplicationBarButtonCommand ButtonText="Settings" CommandBinding="{Binding AppSettingsCommand}" />
+        <prismInteractivity:ApplicationBarButtonCommand ButtonText="Filters" CommandBinding="{Binding FiltersCommand}" />
+    </Custom:Interaction.Behaviors>
+    
+    <Custom:Interaction.Triggers>
+        <prismInteractionRequest:InteractionRequestTrigger SourceObject="{Binding SubmitNotificationInteractionRequest}">
+            <prismInteractionRequest:ToastPopupAction PopupElementName="SynchronizationToast" />
+        </prismInteractionRequest:InteractionRequestTrigger>
+
+        <prismInteractionRequest:InteractionRequestTrigger SourceObject="{Binding SubmitErrorInteractionRequest}">
+            <prismInteractionRequest:MessageBoxAction />
+        </prismInteractionRequest:InteractionRequestTrigger>
+    </Custom:Interaction.Triggers>
+
+    <!--Resources-->
+    <phone:PhoneApplicationPage.Resources>
+        <converters:VisibilityConverter x:Key="VisibilityConverter"/>
+        <converters:VisibilityConverter x:Key="NegativeVisibilityConverter" Negative="True"/>
+    </phone:PhoneApplicationPage.Resources>
+
+    <!--LayoutRoot contains the root grid where all other page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="4"/>
+        </Grid.RowDefinitions>
+
+        <!--SettingNotConfiguredPanel is shown only when the user has not entered his setting-->
+        <StackPanel x:Name="SettingNotConfiguredPanel" Grid.Row="0" Margin="24,24,0,12"
+                    Visibility="{Binding SettingAreNotConfigured, Converter={StaticResource VisibilityConverter}}">
+            <TextBlock x:Name="ApplicationTitle" Text="TAILSPIN SURVEYS" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="Surveys" Margin="-3,-8,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <ContentControl Template="{StaticResource SettingsNotConfiguredTextBlock}" />
+        </StackPanel>
+
+        <Canvas Grid.Row="1">
+            <!--Synchronization Status Toast -->
+            <Popup x:Name="SynchronizationToast">
+                <Grid Background="{StaticResource PhoneAccentBrush}" VerticalAlignment="Bottom" Width="480">
+                    <TextBlock Text="{Binding Title}" HorizontalAlignment="Stretch" Foreground="Black" TextWrapping="Wrap" Margin="14,5,14,5">
+                        <Custom:Interaction.Behaviors>
+                            <pag:PopupHideOnLeftMouseUp/>
+                        </Custom:Interaction.Behaviors>
+                    </TextBlock>
+                </Grid>
+            </Popup>
+
+            <!--Pivot Control-->
+            <phoneControls:Pivot
+                                Title="TAILSPIN SURVEYS"
+                                Name="homePivot"
+                                SelectedIndex="{Binding SelectedPivotIndex, Mode=TwoWay}"
+                                Visibility="{Binding SettingAreConfigured, Converter={StaticResource VisibilityConverter}}">
+                <!--New Surveys-->
+                <phoneControls:PivotItem Header="new">
+                    <StackPanel Orientation="Vertical">
+                        <ContentControl Template="{StaticResource NoItemsTextBlock}"  Visibility="{Binding NewItems.IsEmpty, Converter={StaticResource VisibilityConverter}}" />
+                        <ListBox ItemsSource="{Binding NewItems}" Style="{StaticResource SurveyTemplateItemStyle}"
+                                 Visibility="{Binding NewItems.IsEmpty, Converter={StaticResource NegativeVisibilityConverter}}" />
+                    </StackPanel>
+                </phoneControls:PivotItem>
+
+                <!--Favorites-->
+                <phoneControls:PivotItem Header="favorites">
+                    <StackPanel Orientation="Vertical">
+                        <ContentControl Template="{StaticResource NoItemsTextBlock}"  Visibility="{Binding FavoriteItems.IsEmpty, Converter={StaticResource VisibilityConverter}}" />
+                        <ListBox ItemsSource="{Binding FavoriteItems}" Style="{StaticResource SurveyTemplateItemStyle}"
+                                 Visibility="{Binding FavoriteItems.IsEmpty, Converter={StaticResource NegativeVisibilityConverter}}" />
+                    </StackPanel>
+                </phoneControls:PivotItem>
+
+                <!--By Length-->
+                <phoneControls:PivotItem Header="by length">
+                    <StackPanel Orientation="Vertical">
+                        <ContentControl Template="{StaticResource NoItemsTextBlock}"  Visibility="{Binding ByLengthItems.IsEmpty, Converter={StaticResource VisibilityConverter}}" />
+                        <ListBox ItemsSource="{Binding ByLengthItems}" Style="{StaticResource SurveyTemplateItemStyle}"
+                                 Visibility="{Binding ByLengthItems.IsEmpty, Converter={StaticResource NegativeVisibilityConverter}}"/>
+                    </StackPanel>
+                </phoneControls:PivotItem>
+            </phoneControls:Pivot>
+        </Canvas>
+
+        <!--ProgressBar for showing synchronization activity-->
+        <StackPanel Grid.Row="2"
+                    Visibility="{Binding IsSynchronizing, Converter={StaticResource VisibilityConverter}}">
+            <ProgressBar Height="4" HorizontalAlignment="Center"
+                     Margin="10,0,10,5" 
+                     Name="syncProgressBar" 
+                     VerticalAlignment="Bottom"
+                     Width="460" 
+                     IsIndeterminate="{Binding IsSynchronizing}"/>
+        </StackPanel>
+
+    </Grid>
+</phone:PhoneApplicationPage>

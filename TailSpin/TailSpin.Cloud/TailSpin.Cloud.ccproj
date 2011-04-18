@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>1.3.0</ProductVersion>
+    <ProjectGuid>{1031cb72-3b13-4226-813f-97ea7cf9b2cf}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TailSpin.Cloud</RootNamespace>
+    <AssemblyName>TailSpin.Cloud</AssemblyName>
+    <StartDevelopmentStorage>True</StartDevelopmentStorage>
+    <Name>TailSpin.Cloud</Name>
+    <FullDeploy>true</FullDeploy>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <!-- Items for the project -->
+  <ItemGroup>
+    <ServiceDefinition Include="ServiceDefinition.csdef" />
+    <ServiceConfiguration Include="ServiceConfiguration.cscfg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TailSpin.Services.Surveys.Host.Azure\TailSpin.Services.Surveys.Host.Azure.csproj">
+      <Name>TailSpin.Services.Surveys.Host.Azure</Name>
+      <Project>{483bfbc6-46dd-46d1-91c2-225991558b2d}</Project>
+      <Private>True</Private>
+      <RoleType>Web</RoleType>
+      <RoleName>TailSpin.Services.Surveys.Host.Azure</RoleName>
+    </ProjectReference>
+    <ProjectReference Include="..\TailSpin.Web.Survey.Public\TailSpin.Web.Survey.Public.csproj">
+      <Name>TailSpin.Web.Survey.Public</Name>
+      <Project>{98167766-b6de-43ef-82de-00ed592047ea}</Project>
+      <Private>True</Private>
+      <RoleType>Web</RoleType>
+      <RoleName>TailSpin.Web.Survey.Public</RoleName>
+    </ProjectReference>
+    <ProjectReference Include="..\TailSpin.Web\TailSpin.Web.csproj">
+      <Name>TailSpin.Web</Name>
+      <Project>{191946e4-4c1f-4cf4-a4ad-26c86b0e0d2e}</Project>
+      <Private>True</Private>
+      <RoleType>Web</RoleType>
+      <RoleName>TailSpin.Web</RoleName>
+    </ProjectReference>
+    <ProjectReference Include="..\TailSpin.Workers.Notifications\TailSpin.Workers.Notifications.csproj">
+      <Name>TailSpin.Workers.Notifications</Name>
+      <Project>{1721fd05-f014-4739-9b58-22b50e08478f}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>TailSpin.Workers.Notifications</RoleName>
+    </ProjectReference>
+    <ProjectReference Include="..\TailSpin.Workers.Surveys\TailSpin.Workers.Surveys.csproj">
+      <Name>TailSpin.Workers.Surveys</Name>
+      <Project>{4ca3abfd-de77-4bff-bafe-84351c700e5b}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>TailSpin.Workers.Surveys</RoleName>
+    </ProjectReference>
+  </ItemGroup>
+  <!-- Import the target files for this project template -->
+  <PropertyGroup>
+    <CloudExtensionsDir Condition=" '$(CloudExtensionsDir)' == '' ">$(MSBuildExtensionsPath)\Microsoft\Cloud Service\1.0\Visual Studio 10.0\</CloudExtensionsDir>
+  </PropertyGroup>
+  <Import Project="$(CloudExtensionsDir)Microsoft.CloudService.targets" />
+</Project>

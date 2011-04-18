@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<%@ Master Language="C#" AutoEventWireup="false" Inherits="System.Web.Mvc.ViewMasterPage<TailSpin.Web.Models.TenantMasterPageViewData>" %>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>TailSpin - <%:this.Model.Title%></title>
+    <link href="<%:Url.Content("~/Content/styles/baseStyle.css")%>" rel="stylesheet" type="text/css" media="screen" />
+    <asp:ContentPlaceHolder runat="server" ID="Head" />
+</head>
+<body>
+<div id="header">
+	<div id="top">
+		<div id="topNav">
+           <% if (Request.IsAuthenticated) { %>
+            <strong><%:this.Context.User.Identity.Name%></strong>
+            <ul>
+            <li>| <% if (this.ViewContext.RouteData.Values["tenant"] != null)
+               { %>
+                <%:ViewData["tenant"]%>
+            <% } %></li>	            
+	            <li>| <a href="#">Settings</a></li>
+	            <li>| <a href="#">Help</a></li>
+	            <li>| <%:Html.ActionLink("Signout", "Signout", "ClaimsAuthentication", new {area = string.Empty}, null)%></li>
+            </ul>
+            <% } else { %>
+            <ul>
+                <li><%:Html.ActionLink("Home", string.Empty, "OnBoarding", new { area = string.Empty}, null)%></li>
+	            <li>| <%:Html.ActionLink("Join", "Join", "OnBoarding", new { area = string.Empty}, null)%></li>
+	            <li>| <a href="#">Learn more</a></li>
+            </ul>
+            
+            <% } %>
+		</div><div class="clear"></div>
+	</div>
+</div>
+<div id="logo">    
+    <img src="<%:string.IsNullOrEmpty(this.Model.LogoUrl) ? Url.Content("~/Content/Img/tailspin-logo.png") : this.Model.LogoUrl%>" alt="Powered by TailSpin" width="135" height="54" align="top" />    
+</div>
+<div id="search">
+	<table border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			<td></td>
+		</tr>
+	</table>
+</div>
+<div id="container">
+    <div id="navMenu">
+        <asp:ContentPlaceHolder ID="MenuContent" runat="server" />
+        <div class="clear"></div>
+    </div>
+    <div id="main">
+        <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+        
+        <div id="footer">
+		    <div id="footerBottom">
+			    <div id="copyright">Copyright &copy; 2010 TailSpin</div>
+                <ul>
+                    <li>&nbsp;</li>
+			    </ul>
+		    </div>
+        </div>
+    </div>
+</div>
+<div id="containerBottom"></div>
+</body>
+</html>
