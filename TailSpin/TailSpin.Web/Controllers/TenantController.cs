@@ -1,14 +1,4 @@
-﻿
-
-
-
-
- 
-
-
-
-
-namespace TailSpin.Web.Controllers
+﻿namespace TailSpin.Web.Controllers
 {
     using System;
     using System.Globalization;
@@ -27,32 +17,29 @@ namespace TailSpin.Web.Controllers
             this.tenantStore = tenantStore;
         }
 
-        public ITenantStore TenantStore
-        {
-            get { return this.tenantStore; }
-        }
+        public Tenant Tenant { get; set; }
 
         public string TenantName
         {
-            get
-            {
-                return this.tenantName;
-            }
+            get { return tenantName; }
 
             set
             {
-                this.tenantName = value;
-                this.ViewData["tenant"] = value;
+                tenantName = value;
+                ViewData["tenant"] = value;
             }
         }
-        
-        public Tenant Tenant { get; set; }
+
+        public ITenantStore TenantStore
+        {
+            get { return tenantStore; }
+        }
 
         public TenantPageViewData<T> CreateTenantPageViewData<T>(T contentModel)
         {
             var tenantPageViewData = new TenantPageViewData<T>(contentModel)
                                          {
-                                             LogoUrl = this.Tenant == null ? string.Empty : this.Tenant.Logo
+                                             LogoUrl = Tenant == null ? string.Empty : Tenant.Logo
                                          };
             return tenantPageViewData;
         }
@@ -61,18 +48,18 @@ namespace TailSpin.Web.Controllers
         {
             if (filterContext.RouteData.Values["tenant"] != null)
             {
-                this.TenantName = (string)filterContext.RouteData.Values["tenant"];
+                TenantName = (string) filterContext.RouteData.Values["tenant"];
             }
 
-            if (this.Tenant == null)
+            if (Tenant == null)
             {
-                var tenant = this.TenantStore.GetTenant(this.tenantName);
+                var tenant = TenantStore.GetTenant(tenantName);
                 if (tenant == null)
                 {
-                    throw new ArgumentException(string.Format(CultureInfo.CurrentUICulture, "'{0}' is not a valid tenant.", this.tenantName));
+                    throw new ArgumentException(string.Format(CultureInfo.CurrentUICulture, "'{0}' is not a valid tenant.", tenantName));
                 }
 
-                this.Tenant = tenant;
+                Tenant = tenant;
             }
 
             base.OnActionExecuting(filterContext);

@@ -1,14 +1,4 @@
-﻿
-
-
-
-
- 
-
-
-
-
-namespace TailSpin.Web.Controllers
+﻿namespace TailSpin.Web.Controllers
 {
     using System.Web.Mvc;
     using TailSpin.Web.Models;
@@ -18,15 +8,15 @@ namespace TailSpin.Web.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var model = new TenantMasterPageViewData { Title = "On boarding" };
+            var model = new TenantMasterPageViewData {Title = "On boarding"};
             return View(model);
         }
 
         [HttpGet]
         public ActionResult Join()
         {
-            var model = new TenantMasterPageViewData { Title = "Join Tailspin" };
-            return View(model);   
+            var model = new TenantMasterPageViewData {Title = "Join Tailspin"};
+            return View(model);
         }
     }
 }

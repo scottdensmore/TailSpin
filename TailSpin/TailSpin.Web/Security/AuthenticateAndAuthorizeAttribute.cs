@@ -1,14 +1,4 @@
-﻿
-
-
-
-
- 
-
-
-
-
-namespace TailSpin.Web.Security
+﻿namespace TailSpin.Web.Security
 {
     using System;
     using System.Configuration;
@@ -39,7 +29,7 @@ namespace TailSpin.Web.Security
                 throw new NotSupportedException("The AuthenticateAndAuthorize attribute can only be used in controllers that inherit from TenantController.");
             }
 
-            var tenantName = (string)filterContext.RouteData.Values["tenant"];
+            var tenantName = (string) filterContext.RouteData.Values["tenant"];
             var tenantController = filterContext.Controller as TenantController;
             var tenant = tenantController.TenantStore.GetTenant(tenantName);
             if (tenant == null)
@@ -55,7 +45,47 @@ namespace TailSpin.Web.Security
             }
             else
             {
-                this.AuthorizeUser(filterContext);
+                AuthorizeUser(filterContext);
+            }
+        }
+
+        private static void AuthenticateUser(AuthorizationContext context)
+        {
+            var tenantName = (string) context.RouteData.Values["tenant"];
+
+            if (!string.IsNullOrEmpty(tenantName))
+            {
+                var returnUrl = GetReturnUrl(context.RequestContext);
+
+                // user is not authenticated and it's entering for the first time
+                var fam = FederatedAuthentication.WSFederationAuthenticationModule;
+                var signIn = new SignInRequestMessage(new Uri(fam.Issuer), fam.Realm)
+                                 {
+                                     Context = returnUrl.ToString(),
+                                     HomeRealm = RetrieveHomeRealmForTenant(tenantName)
+                                 };
+
+                // In the Windows Azure environment, build a wreply parameter for  the SignIn request
+                // that reflects the real address of the application.
+                HttpRequest request = HttpContext.Current.Request;
+                Uri requestUrl = request.Url;
+
+                StringBuilder wreply = new StringBuilder();
+                wreply.Append(requestUrl.Scheme); // e.g. "http" or "https"
+                wreply.Append("://");
+                wreply.Append(request.Headers["Host"] ?? requestUrl.Authority);
+                wreply.Append(request.ApplicationPath);
+
+                if (!request.ApplicationPath.EndsWith("/", StringComparison.OrdinalIgnoreCase))
+                {
+                    wreply.Append("/");
+                }
+
+                wreply.Append("FederationResult");
+
+                signIn.Reply = wreply.ToString();
+
+                context.Result = new RedirectResult(signIn.WriteQueryString());
             }
         }
 
@@ -65,7 +95,7 @@ namespace TailSpin.Web.Security
             var reqUrl = request.Url;
             var wreply = new StringBuilder();
 
-            wreply.Append(reqUrl.Scheme);     // e.g. "http"
+            wreply.Append(reqUrl.Scheme); // e.g. "http"
             wreply.Append("://");
             wreply.Append(request.Headers["Host"] ?? reqUrl.Authority);
             wreply.Append(request.RawUrl);
@@ -89,49 +119,9 @@ namespace TailSpin.Web.Security
             return tenantHomeRealm;
         }
 
-        private static void AuthenticateUser(AuthorizationContext context)
-        {
-            var tenantName = (string)context.RouteData.Values["tenant"];
-
-            if (!string.IsNullOrEmpty(tenantName))
-            {
-                var returnUrl = GetReturnUrl(context.RequestContext);
-
-                // user is not authenticated and it's entering for the first time
-                var fam = FederatedAuthentication.WSFederationAuthenticationModule;
-                var signIn = new SignInRequestMessage(new Uri(fam.Issuer), fam.Realm)
-                {
-                    Context = returnUrl.ToString(),
-                    HomeRealm = RetrieveHomeRealmForTenant(tenantName)
-                };
-
-                // In the Windows Azure environment, build a wreply parameter for  the SignIn request
-                // that reflects the real address of the application.
-                HttpRequest request = HttpContext.Current.Request;
-                Uri requestUrl = request.Url;
-
-                StringBuilder wreply = new StringBuilder();
-                wreply.Append(requestUrl.Scheme);     // e.g. "http" or "https"
-                wreply.Append("://");
-                wreply.Append(request.Headers["Host"] ?? requestUrl.Authority);
-                wreply.Append(request.ApplicationPath);
-
-                if (!request.ApplicationPath.EndsWith("/", StringComparison.OrdinalIgnoreCase))
-                {
-                    wreply.Append("/");
-                }
-
-                wreply.Append("FederationResult");
-
-                signIn.Reply = wreply.ToString();
-
-                context.Result = new RedirectResult(signIn.WriteQueryString());
-            }
-        }
-
         private void AuthorizeUser(AuthorizationContext context)
         {
-            var tenantRequested = (string)context.RouteData.Values["tenant"];
+            var tenantRequested = (string) context.RouteData.Values["tenant"];
             var userTenant = ClaimHelper.GetCurrentUserClaim(TailSpin.ClaimTypes.Tenant).Value;
             if (!tenantRequested.Equals(userTenant, StringComparison.OrdinalIgnoreCase))
             {
@@ -139,7 +129,7 @@ namespace TailSpin.Web.Security
                 return;
             }
 
-            var authorizedRoles = this.Roles.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+            var authorizedRoles = Roles.Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries);
             bool hasValidRole = false;
             foreach (var role in authorizedRoles)
             {

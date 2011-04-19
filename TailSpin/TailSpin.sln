@@ -8,7 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A6347D06-5A68-4A22-97C6-9A3E3FEE3803}"
 	ProjectSection(SolutionItems) = preProject
 		Local.testsettings = Local.testsettings
-		TailSpin1.vsmdi = TailSpin1.vsmdi
+		TailSpin3.vsmdi = TailSpin3.vsmdi
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
@@ -60,7 +60,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prism.Interactivity", "..\P
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = TailSpin1.vsmdi
+		CategoryFile = TailSpin3.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

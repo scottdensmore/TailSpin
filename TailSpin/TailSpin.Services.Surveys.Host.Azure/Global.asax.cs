@@ -1,20 +1,10 @@
-﻿
-
-
-
-
- 
-
-
-
-
-namespace TailSpin.Services.Surveys
+﻿namespace TailSpin.Services.Surveys
 {
     using System;
     using System.ServiceModel.Activation;
     using System.Web;
     using System.Web.Routing;
-    using Registration;
+    using TailSpin.Services.Surveys.Registration;
     using TailSpin.Services.Surveys.Surveys;
 
     public class Global : HttpApplication
@@ -27,8 +17,8 @@ namespace TailSpin.Services.Surveys
         private static void RegisterRoutes()
         {
             var customServiceHostFactory = new CustomServiceHostFactory(ContainerLocator.Container);
-            RouteTable.Routes.Add(new ServiceRoute("Registration", customServiceHostFactory, typeof(RegistrationService)));
-            RouteTable.Routes.Add(new ServiceRoute("Survey", customServiceHostFactory, typeof(SurveysService)));
+            RouteTable.Routes.Add(new ServiceRoute("Registration", customServiceHostFactory, typeof (RegistrationService)));
+            RouteTable.Routes.Add(new ServiceRoute("Survey", customServiceHostFactory, typeof (SurveysService)));
         }
     }
 }
