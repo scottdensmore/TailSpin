@@ -1,14 +1,4 @@
-﻿
-
-
-
-
- 
-
-
-
-
-namespace TailSpin.Web.Survey.Shared
+﻿namespace TailSpin.Web.Survey.Shared
 {
     using System.Collections.Generic;
     using Microsoft.Practices.Unity;
@@ -23,23 +13,62 @@ namespace TailSpin.Web.Survey.Shared
 
     public static class ComponentRegistration
     {
-        public static void RegisterSurveyStore(IUnityContainer container)
+        public static void RegisterFilteringService(IUnityContainer container)
+        {
+            container.RegisterType<IFilteringService, FilteringService>(
+                new InjectionConstructor(
+                    new ResolvedArrayParameter<ISurveyFilter>(new ResolvedParameter<ISurveyFilter>("tenantFilter"))));
+
+            container.RegisterType<ISurveyFilter, TenantFilter>("tenantFilter");
+
+            RegisterSurveyStore(container);
+            RegisterTenantFilterStore(container);
+            RegisterTenantStore(container);
+        }
+
+        public static void RegisterMediaAnswerStore(IUnityContainer container)
         {
             var account = CloudConfiguration.GetStorageAccount("DataConnectionString");
             container.RegisterInstance(account);
 
-            container.RegisterType<ISurveyStore, SurveyStore>();
+            container.RegisterType<IMediaAnswerStore, MediaAnswerStore>(
+                new InjectionConstructor(
+                    new ResolvedParameter<IAzureBlobContainer<byte[]>>(AzureConstants.BlobContainers.VoiceAnswers),
+                    new ResolvedParameter<IAzureBlobContainer<byte[]>>(AzureConstants.BlobContainers.PictureAnswers)));
 
-            container.RegisterType<IAzureTable<SurveyRow>, AzureTable<SurveyRow>>(
-                new InjectionConstructor(typeof(CloudStorageAccount), AzureConstants.Tables.Surveys));
+            container.RegisterType<IAzureBlobContainer<byte[]>, FilesBlobContainer>(
+                AzureConstants.BlobContainers.PictureAnswers,
+                new InjectionConstructor(
+                    typeof(CloudStorageAccount),
+                    AzureConstants.BlobContainers.PictureAnswers,
+                    "image/jpeg",
+                    new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob }));
 
-            container.RegisterType<IAzureTable<QuestionRow>, AzureTable<QuestionRow>>(
-                new InjectionConstructor(typeof(CloudStorageAccount), AzureConstants.Tables.Questions));
+            container.RegisterType<IAzureBlobContainer<byte[]>, FilesBlobContainer>(
+                AzureConstants.BlobContainers.VoiceAnswers,
+                new InjectionConstructor(
+                    typeof(CloudStorageAccount),
+                    AzureConstants.BlobContainers.VoiceAnswers,
+                    "audio/x-wav",
+                    new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob }));
 
-            container.RegisterType<IAzureQueue<NewSurveyMessage>, AzureQueue<NewSurveyMessage>>(
-                new InjectionConstructor(typeof(CloudStorageAccount), AzureConstants.Queues.NewSurveyStored));
+            container.Resolve<IMediaAnswerStore>().Initialize();
+        }
 
-            container.Resolve<ISurveyStore>().Initialize();
+        public static void RegisterNewSurveyNotificationCommand(IUnityContainer container)
+        {
+            RegisterSurveyStore(container);
+            RegisterFilteringService(container);
+            RegisterUserDeviceStore(container);
+            RegisterPushNotification(container);
+        }
+
+        public static void RegisterPushNotification(IUnityContainer container)
+        {
+            var account = CloudConfiguration.GetStorageAccount("DataConnectionString");
+            container.RegisterInstance(account);
+
+            container.RegisterType<IPushNotification, PushNotification>();
         }
 
         public static void RegisterSurveyAnswerStore(IUnityContainer container)
@@ -71,33 +100,17 @@ namespace TailSpin.Web.Survey.Shared
             container.Resolve<ISurveyAnswerStore>().Initialize();
         }
 
-        public static void RegisterMediaAnswerStore(IUnityContainer container)
+        public static void RegisterSurveyAnswerTransferStore(IUnityContainer container)
         {
             var account = CloudConfiguration.GetStorageAccount("DataConnectionString");
             container.RegisterInstance(account);
 
-            container.RegisterType<IMediaAnswerStore, MediaAnswerStore>(
-                new InjectionConstructor(
-                    new ResolvedParameter<IAzureBlobContainer<byte[]>>(AzureConstants.BlobContainers.VoiceAnswers),
-                    new ResolvedParameter<IAzureBlobContainer<byte[]>>(AzureConstants.BlobContainers.PictureAnswers)));
-            
-            container.RegisterType<IAzureBlobContainer<byte[]>, FilesBlobContainer>(
-                AzureConstants.BlobContainers.PictureAnswers,
-                new InjectionConstructor(
-                    typeof(CloudStorageAccount), 
-                    AzureConstants.BlobContainers.PictureAnswers, 
-                    "image/jpeg", 
-                    new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob }));
+            container.RegisterType<ISurveyTransferStore, SurveyTransferStore>();
 
-            container.RegisterType<IAzureBlobContainer<byte[]>, FilesBlobContainer>(
-                AzureConstants.BlobContainers.VoiceAnswers,
-                new InjectionConstructor(
-                    typeof(CloudStorageAccount), 
-                    AzureConstants.BlobContainers.VoiceAnswers, 
-                    "audio/x-wav",
-                    new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob }));
+            container.RegisterType<IAzureQueue<SurveyTransferMessage>, AzureQueue<SurveyTransferMessage>>(
+                new InjectionConstructor(typeof(CloudStorageAccount), AzureConstants.Queues.SurveyTransferRequest));
 
-            container.Resolve<IMediaAnswerStore>().Initialize();
+            container.Resolve<ISurveyTransferStore>().Initialize();
         }
 
         public static void RegisterSurveyAnswersSummaryStore(IUnityContainer container)
@@ -113,25 +126,41 @@ namespace TailSpin.Web.Survey.Shared
             container.Resolve<ISurveyAnswersSummaryStore>().Initialize();
         }
 
-        public static void RegisterSurveyAnswerTransferStore(IUnityContainer container)
+        public static void RegisterSurveySqlStore(IUnityContainer container)
         {
-            var account = CloudConfiguration.GetStorageAccount("DataConnectionString");
-            container.RegisterInstance(account);
-
-            container.RegisterType<ISurveyTransferStore, SurveyTransferStore>();
-
-            container.RegisterType<IAzureQueue<SurveyTransferMessage>, AzureQueue<SurveyTransferMessage>>(
-                new InjectionConstructor(typeof(CloudStorageAccount), AzureConstants.Queues.SurveyTransferRequest));
-
-            container.Resolve<ISurveyTransferStore>().Initialize();
+            container.RegisterType<ISurveySqlStore, SurveySqlStore>();
         }
 
-        public static void RegisterPushNotification(IUnityContainer container)
+        public static void RegisterSurveyStore(IUnityContainer container)
         {
             var account = CloudConfiguration.GetStorageAccount("DataConnectionString");
             container.RegisterInstance(account);
 
-            container.RegisterType<IPushNotification, PushNotification>();
+            container.RegisterType<ISurveyStore, SurveyStore>();
+
+            container.RegisterType<IAzureTable<SurveyRow>, AzureTable<SurveyRow>>(
+                new InjectionConstructor(typeof(CloudStorageAccount), AzureConstants.Tables.Surveys));
+
+            container.RegisterType<IAzureTable<QuestionRow>, AzureTable<QuestionRow>>(
+                new InjectionConstructor(typeof(CloudStorageAccount), AzureConstants.Tables.Questions));
+
+            container.RegisterType<IAzureQueue<NewSurveyMessage>, AzureQueue<NewSurveyMessage>>(
+                new InjectionConstructor(typeof(CloudStorageAccount), AzureConstants.Queues.NewSurveyStored));
+
+            container.Resolve<ISurveyStore>().Initialize();
+        }
+
+        public static void RegisterTenantFilterStore(IUnityContainer container)
+        {
+            var account = CloudConfiguration.GetStorageAccount("DataConnectionString");
+            container.RegisterInstance(account);
+
+            container.RegisterType<ITenantFilterStore, TenantFilterStore>();
+
+            container.RegisterType<IAzureTable<TenantFilterRow>, AzureTable<TenantFilterRow>>(
+                new InjectionConstructor(typeof(CloudStorageAccount), AzureConstants.Tables.TenantFilter));
+
+            container.Resolve<ITenantFilterStore>().Initialize();
         }
 
         public static void RegisterTenantStore(IUnityContainer container)
@@ -148,27 +177,10 @@ namespace TailSpin.Web.Survey.Shared
                 new InjectionConstructor(typeof(CloudStorageAccount), AzureConstants.BlobContainers.Tenants));
 
             container.RegisterType<IAzureBlobContainer<byte[]>, FilesBlobContainer>(
-               AzureConstants.BlobContainers.Logos,
-               new InjectionConstructor(typeof(CloudStorageAccount), AzureConstants.BlobContainers.Logos, "image/jpeg"));
+                AzureConstants.BlobContainers.Logos,
+                new InjectionConstructor(typeof(CloudStorageAccount), AzureConstants.BlobContainers.Logos, "image/jpeg"));
 
             container.Resolve<ITenantStore>().Initialize();
-        }
-
-        public static void RegisterUpdatingSurveyResultsSummaryCommand(IUnityContainer container)
-        {
-            container.RegisterType<IDictionary<string, SurveyAnswersSummary>, Dictionary<string, SurveyAnswersSummary>>(
-                new InjectionConstructor());
-
-            RegisterSurveyAnswerStore(container);
-            RegisterSurveyAnswersSummaryStore(container);
-        }
-
-        public static void RegisterNewSurveyNotificationCommand(IUnityContainer container)
-        {
-            RegisterSurveyStore(container);
-            RegisterFilteringService(container);
-            RegisterUserDeviceStore(container);
-            RegisterPushNotification(container);
         }
 
         public static void RegisterTransferSurveysToSqlAzureCommand(IUnityContainer container)
@@ -179,35 +191,13 @@ namespace TailSpin.Web.Survey.Shared
             RegisterSurveySqlStore(container);
         }
 
-        public static void RegisterSurveySqlStore(IUnityContainer container)
+        public static void RegisterUpdatingSurveyResultsSummaryCommand(IUnityContainer container)
         {
-            container.RegisterType<ISurveySqlStore, SurveySqlStore>();
-        }
+            container.RegisterType<IDictionary<string, SurveyAnswersSummary>, Dictionary<string, SurveyAnswersSummary>>(
+                new InjectionConstructor());
 
-        public static void RegisterFilteringService(IUnityContainer container)
-        {
-            container.RegisterType<IFilteringService, FilteringService>(
-                new InjectionConstructor(
-                    new ResolvedArrayParameter<ISurveyFilter>(new ResolvedParameter<ISurveyFilter>("tenantFilter"))));
-
-            container.RegisterType<ISurveyFilter, TenantFilter>("tenantFilter");
-
-            RegisterSurveyStore(container);
-            RegisterTenantFilterStore(container);
-            RegisterTenantStore(container);
-        }
-
-        public static void RegisterTenantFilterStore(IUnityContainer container)
-        {
-            var account = CloudConfiguration.GetStorageAccount("DataConnectionString");
-            container.RegisterInstance(account);
-
-            container.RegisterType<ITenantFilterStore, TenantFilterStore>();
-
-            container.RegisterType<IAzureTable<TenantFilterRow>, AzureTable<TenantFilterRow>>(
-                new InjectionConstructor(typeof(CloudStorageAccount), AzureConstants.Tables.TenantFilter));
-
-            container.Resolve<ITenantFilterStore>().Initialize();
+            RegisterSurveyAnswerStore(container);
+            RegisterSurveyAnswersSummaryStore(container);
         }
 
         public static void RegisterUserDeviceStore(IUnityContainer container)

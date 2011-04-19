@@ -1,14 +1,4 @@
-﻿
-
-
-
-
- 
-
-
-
-
-namespace TailSpin.Workers.Surveys.Tests
+﻿namespace TailSpin.Workers.Surveys.Tests
 {
     using System.Collections.Generic;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -125,15 +115,15 @@ namespace TailSpin.Workers.Surveys.Tests
             var command = new TransferSurveysToSqlAzureCommand(mockSurveyAnswerStore.Object, mockSurveyStore.Object, mockTenantStore.Object, mockSurveySqlStore.Object);
             var message = new SurveyTransferMessage { Tenant = "tenant", SlugName = "slugName" };
             var survey = new Survey("slugName")
-            {
-                Tenant = "tenant",
-            };
+                             {
+                                 Tenant = "tenant",
+                             };
             survey.Questions.Add(new Question
-            {
-                Text = "What is your favorite food?",
-                PossibleAnswers = "Coffee\nPizza\nSalad",
-                Type = QuestionType.MultipleChoice
-            });
+                                     {
+                                         Text = "What is your favorite food?",
+                                         PossibleAnswers = "Coffee\nPizza\nSalad",
+                                         Type = QuestionType.MultipleChoice
+                                     });
             mockSurveyStore.Setup(r => r.GetSurveyByTenantAndSlugName("tenant", "slugName", true)).Returns(survey);
             mockSurveyAnswerStore.Setup(r => r.GetSurveyAnswerIds("tenant", "slugName")).Returns(new List<string> { "id" });
             mockSurveyAnswerStore.Setup(r => r.GetSurveyAnswer("tenant", "slugName", "id")).Returns(new SurveyAnswer());

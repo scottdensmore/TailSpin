@@ -1,14 +1,4 @@
-﻿
-
-
-
-
- 
-
-
-
-
-namespace TailSpin.Services.Surveys
+﻿namespace TailSpin.Services.Surveys
 {
     using System;
     using System.ServiceModel;

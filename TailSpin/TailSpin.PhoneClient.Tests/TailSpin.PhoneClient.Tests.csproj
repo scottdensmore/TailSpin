@@ -86,10 +86,10 @@
     <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="Microsoft.Phone.Reactive" />
     <Reference Include="Microsoft.Silverlight.Testing">
-      <HintPath>..\..\..\Lib\Silverlight3UnitTestingFramework\Microsoft.Silverlight.Testing.dll</HintPath>
+      <HintPath>..\..\Lib\Silverlight3UnitTestingFramework\Microsoft.Silverlight.Testing.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight">
-      <HintPath>..\..\..\Lib\Silverlight3UnitTestingFramework\Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll</HintPath>
+      <HintPath>..\..\Lib\Silverlight3UnitTestingFramework\Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight.dll</HintPath>
     </Reference>
     <Reference Include="System.Observable" />
     <Reference Include="System.Windows" />

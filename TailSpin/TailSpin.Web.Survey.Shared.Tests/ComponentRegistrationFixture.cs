@@ -1,14 +1,4 @@
-﻿
-
-
-
-
- 
-
-
-
-
-namespace TailSpin.Web.Survey.Shared.Tests
+﻿namespace TailSpin.Web.Survey.Shared.Tests
 {
     using Microsoft.Practices.Unity;
     using Microsoft.VisualStudio.TestTools.UnitTesting;

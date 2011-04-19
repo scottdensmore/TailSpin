@@ -1,14 +1,4 @@
-﻿
-
-
-
-
- 
-
-
-
-
-namespace TailSpin.Web.Tests.Controllers
+﻿namespace TailSpin.Web.Tests.Controllers
 {
     using System.IO;
     using System.Web;
@@ -97,4 +87,3 @@ namespace TailSpin.Web.Tests.Controllers
         }
     }
 }
-

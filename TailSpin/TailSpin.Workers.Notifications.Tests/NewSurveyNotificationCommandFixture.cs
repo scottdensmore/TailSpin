@@ -1,14 +1,4 @@
-﻿
-
-
-
-
- 
-
-
-
-
-namespace TailSpin.Workers.Notifications.Tests
+﻿namespace TailSpin.Workers.Notifications.Tests
 {
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -42,7 +32,7 @@ namespace TailSpin.Workers.Notifications.Tests
             var command = new NewSurveyNotificationCommand(mockSurveyStore.Object, mockFilteringService.Object, null, null);
             var survey = new Survey();
             mockSurveyStore.Setup(s => s.GetSurveyByTenantAndSlugName(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool>()))
-                           .Returns(survey);
+                .Returns(survey);
 
             command.Run(new NewSurveyMessage());
 
@@ -57,7 +47,7 @@ namespace TailSpin.Workers.Notifications.Tests
             var mockUserDeviceStore = new Mock<IUserDeviceStore>();
             var command = new NewSurveyNotificationCommand(mockSurveyStore.Object, mockFilteringService.Object, mockUserDeviceStore.Object, null);
             mockSurveyStore.Setup(s => s.GetSurveyByTenantAndSlugName(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool>()))
-                           .Returns(new Survey());
+                .Returns(new Survey());
             mockFilteringService.Setup(s => s.GetUsersForSurvey(It.IsAny<Survey>())).Returns(new[] { "user1", "user2" });
 
             command.Run(new NewSurveyMessage());
@@ -75,7 +65,7 @@ namespace TailSpin.Workers.Notifications.Tests
             var mockPushNotification = new Mock<IPushNotification>();
             var command = new NewSurveyNotificationCommand(mockSurveyStore.Object, mockFilteringService.Object, mockUserDeviceStore.Object, mockPushNotification.Object);
             mockSurveyStore.Setup(s => s.GetSurveyByTenantAndSlugName(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool>()))
-                           .Returns(new Survey());
+                .Returns(new Survey());
             mockFilteringService.Setup(s => s.GetUsersForSurvey(It.IsAny<Survey>())).Returns(new[] { "user" });
             mockUserDeviceStore.Setup(s => s.GetDevices(It.IsAny<string>())).Returns(new[] { new Uri("http://device-uri/") });
 

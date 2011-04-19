@@ -83,7 +83,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Funq">
-      <HintPath>..\..\..\Lib\Funq\Funq.dll</HintPath>
+      <HintPath>..\..\Lib\Funq\Funq.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=3.7.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone" />
