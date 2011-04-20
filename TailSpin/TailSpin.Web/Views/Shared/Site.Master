@@ -6,6 +6,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>TailSpin - <%:this.Model.Title%></title>
     <link href="<%:Url.Content("~/Content/styles/baseStyle.css")%>" rel="stylesheet" type="text/css" media="screen" />
+    <link href="<%: Url.Content("~/Content/themes/base/jquery.ui.all.css") %>" rel="stylesheet" type="text/css" />
+    <script src="<%: Url.Content("~/Scripts/jquery-1.4.4.min.js") %>" type="text/javascript"></script>
+    <script src="<%: Url.Content("~/Scripts/jquery-ui-1.8.11.min.js") %>" type="text/javascript"></script>
     <asp:ContentPlaceHolder runat="server" ID="Head" />
 </head>
 <body>
