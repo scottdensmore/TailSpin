@@ -1,14 +1,4 @@
-﻿
-
-
-
-
- 
-
-
-
-
-namespace TailSpin.Web
+﻿namespace TailSpin.Web
 {
     using System.Web.Mvc;
     using System.Web.Routing;
@@ -23,9 +13,9 @@ namespace TailSpin.Web
                 new { controller = "OnBoarding", action = "Index" });
 
             routes.MapRoute(
-               "JoinTenant",
-               "Join",
-               new { controller = "OnBoarding", action = "Join" });
+                "JoinTenant",
+                "Join",
+                new { controller = "OnBoarding", action = "Join" });
 
             routes.MapRoute(
                 "FederationResultProcessing",
@@ -48,10 +38,10 @@ namespace TailSpin.Web
                 new { controller = "Account", action = "UploadLogo" });
 
             routes.MapRoute(
-               "Default", // Route name
-               "{controller}/{action}/{id}", // URL with parameters
+                "Default", // Route name
+                "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
-           );
+                );
         }
     }
 }

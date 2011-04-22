@@ -10,13 +10,13 @@
 -->
 <ServiceDefinition name="TailSpin.Cloud" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
   <WebRole name="TailSpin.Web" enableNativeCodeExecution="true">
-    <Sites>
+    <!--<Sites>
       <Site name="Web">
         <Bindings>
           <Binding name="HttpsIn" endpointName="HttpsIn" />
         </Bindings>
       </Site>
-    </Sites>
+    </Sites>-->
     <ConfigurationSettings>
       <Setting name="DataConnectionString" />
       <Setting name="DiagnosticsConnectionString" />
@@ -26,17 +26,17 @@
       <Certificate name="localhost" storeLocation="LocalMachine" storeName="My" />
     </Certificates>
     <Endpoints>
-      <InputEndpoint name="HttpsIn" protocol="https" port="443" certificate="localhost" />
+      <InputEndpoint name="HttpsIn" protocol="https" port="444" certificate="localhost" />
     </Endpoints>
   </WebRole>
   <WebRole name="TailSpin.Web.Survey.Public">
-    <Sites>
+    <!--<Sites>
       <Site name="Web">
         <Bindings>
           <Binding name="HttpIn" endpointName="HttpIn" />
         </Bindings>
       </Site>
-    </Sites>
+    </Sites>-->
     <ConfigurationSettings>
       <Setting name="DiagnosticsConnectionString" />
       <Setting name="DataConnectionString" />
@@ -58,13 +58,13 @@
     </ConfigurationSettings>
   </WorkerRole>
   <WebRole name="TailSpin.Services.Surveys.Host.Azure">
-    <Sites>
+    <!--<Sites>
       <Site name="Web">
         <Bindings>
           <Binding name="HttpIn" endpointName="HttpIn" />
         </Bindings>
       </Site>
-    </Sites>
+    </Sites>-->
     <ConfigurationSettings>
       <Setting name="DiagnosticsConnectionString" />
       <Setting name="DataConnectionString" />

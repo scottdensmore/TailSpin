@@ -1,15 +1,4 @@
-﻿<%--
-===============================================================================
- Microsoft patterns & practices
- Windows Phone 7 Developer Guide
-===============================================================================
- Copyright © Microsoft Corporation.  All rights reserved.
- This code released under the terms of the 
- Microsoft patterns & practices
-===============================================================================
---%>
-
-<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<TailSpin.Web.Models.TenantPageViewData<TailSpin.Web.Areas.Survey.Models.ExportResponseModel>>" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<TailSpin.Web.Models.TenantPageViewData<TailSpin.Web.Areas.Survey.Models.ExportResponseModel>>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MenuContent" runat="server">
     <ul>

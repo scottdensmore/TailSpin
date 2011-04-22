@@ -1,14 +1,4 @@
-﻿
-
-
-
-
- 
-
-
-
-
-namespace TailSpin.Web.Controllers
+﻿namespace TailSpin.Web.Controllers
 {
     using System;
     using System.Web.Mvc;

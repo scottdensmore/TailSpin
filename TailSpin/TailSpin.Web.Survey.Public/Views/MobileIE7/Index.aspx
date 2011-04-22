@@ -1,15 +1,4 @@
-﻿<%--
-===============================================================================
- Microsoft patterns & practices
- Windows Phone 7 Developer Guide
-===============================================================================
- Copyright © Microsoft Corporation.  All rights reserved.
- This code released under the terms of the 
- Microsoft patterns & practices
-===============================================================================
---%>
-
-<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
+﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 

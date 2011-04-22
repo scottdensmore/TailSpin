@@ -105,6 +105,7 @@
     <Compile Include="Utility\SerializationExtensions.cs" />
     <Compile Include="Utility\SerializationMode.cs" />
     <Compile Include="WebRole.cs" />
+    <Compile Include="WsFederationRequestValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Survey\Views\Shared\DisplayTemplates\Answer-FiveStar.ascx" />
@@ -216,7 +217,7 @@
     <Content Include="Areas\Survey\Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\Samples.Web.ClaimsUtillities\Samples.Web.ClaimsUtillities.csproj">
+    <ProjectReference Include="..\Shared\Samples.Web.ClaimsUtillities\Samples.Web.ClaimsUtillities.csproj">
       <Project>{3C9C7EE0-3FE1-4F7C-AD8C-F1044B16A8DB}</Project>
       <Name>Samples.Web.ClaimsUtillities</Name>
     </ProjectReference>

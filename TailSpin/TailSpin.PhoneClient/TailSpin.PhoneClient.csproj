@@ -328,11 +328,11 @@
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Prism\Prism.Interactivity\Prism.Interactivity.csproj">
+    <ProjectReference Include="..\Prism\Prism.Interactivity\Prism.Interactivity.csproj">
       <Project>{F3CC2EF9-B092-498A-A7D7-E52DE5370700}</Project>
       <Name>Prism.Interactivity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Prism\Prism\Prism.csproj">
+    <ProjectReference Include="..\Prism\Prism\Prism.csproj">
       <Project>{3BC829AC-1DE8-48A7-BE0C-D96CFE6CF0EA}</Project>
       <Name>Prism</Name>
     </ProjectReference>

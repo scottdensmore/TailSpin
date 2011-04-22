@@ -37,7 +37,7 @@ if (Request.IsAuthenticated) {
                 $("#popup_logon").html("<p>Loading...</p>");
                 $("#popup_logon").dialog({ modal: true, draggable: false, resizable: false, title: 'Select your preferred login method' });
                 $.ajax({
-                    url: '<%: MvcHtmlString.Create(Url.Action("IdentityProviders", "ClaimsAuthentication", new {serviceNamespace = "tailspin", appId = "http://localhost/AcsMvcApplication/"})) %>',
+                    url: '<%: MvcHtmlString.Create(Url.Action("IdentityProviders", "ClaimsAuthentication", new {serviceNamespace = "tailspin", appId = "https://127.0.0.1:444/"})) %>',
                     success: function (data) {
                         dialogHtml = '<ul>';
                         for (i = 0; i < data.length; i++) {

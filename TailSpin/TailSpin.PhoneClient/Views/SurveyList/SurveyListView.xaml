@@ -1,15 +1,4 @@
-﻿<!--
-===============================================================================
- Microsoft patterns & practices
- Windows Phone 7 Developer Guide
-===============================================================================
- Copyright © Microsoft Corporation.  All rights reserved.
- This code released under the terms of the 
- Microsoft patterns & practices license (http://wp7guide.codeplex.com/license)
-===============================================================================
--->
-
-<phone:PhoneApplicationPage
+﻿<phone:PhoneApplicationPage
     x:Class="TailSpin.PhoneClient.Views.SurveyList.SurveyListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

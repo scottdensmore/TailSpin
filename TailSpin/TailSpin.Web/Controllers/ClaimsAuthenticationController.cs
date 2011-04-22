@@ -32,9 +32,9 @@
         public ActionResult IdentityProviders(string serviceNamespace, string appId)
         {
             string idpsJsonEndpoint = string.Format(IdentityProviderJsonEndpoint, serviceNamespace, appId);
+            
             var client = new WebClient();
             var data = client.DownloadData(idpsJsonEndpoint);
-
             return Content(Encoding.UTF8.GetString(data), "application/json");
         }
 

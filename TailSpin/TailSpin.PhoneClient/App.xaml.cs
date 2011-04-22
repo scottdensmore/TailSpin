@@ -1,21 +1,13 @@
-﻿//===============================================================================
-// Microsoft patterns & practices
-// Windows Phone 7 Developer Guide
-//===============================================================================
-// Copyright © Microsoft Corporation.  All rights reserved.
-// This code released under the terms of the 
-// Microsoft patterns & practices license (http://wp7guide.codeplex.com/license)
-//===============================================================================
-
-
-namespace TailSpin.PhoneClient
+﻿namespace TailSpin.PhoneClient
 {
     using System;
+    using System.Diagnostics;
     using System.Windows;
     using System.Windows.Navigation;
-    using Infrastructure;
     using Microsoft.Phone.Controls;
     using Microsoft.Phone.Shell;
+    using TailSpin.PhoneClient.Infrastructure;
+    using TailSpin.PhoneClient.ViewModels;
 
     public partial class App
     {
@@ -30,7 +22,7 @@ namespace TailSpin.PhoneClient
             this.UnhandledException += Application_UnhandledException;
 
             // Standard Silverlight initialization
-            InitializeComponent();
+            this.InitializeComponent();
 
             // Phone-specific initialization
             this.InitializePhoneApplication();
@@ -42,36 +34,34 @@ namespace TailSpin.PhoneClient
         // Easy access to the root frame
         public PhoneApplicationFrame RootFrame { get; private set; }
 
-        private ViewModels.ViewModelLocator ViewModelLocator
+        private ViewModelLocator ViewModelLocator
         {
-            get { return (ViewModels.ViewModelLocator)this.Resources["ViewModelLocator"]; }
+            get { return (ViewModelLocator)this.Resources["ViewModelLocator"]; }
         }
 
         // Code to execute if a navigation fails
-        private static void RootFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)
-        {
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
-                // A navigation has failed; break into the debugger
-                System.Diagnostics.Debugger.Break();
-            }
-        }
 
         // Code to execute on Unhandled Exceptions
         private static void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
-            if (System.Diagnostics.Debugger.IsAttached)
+            if (Debugger.IsAttached)
             {
                 // An unhandled exception has occurred; break into the debugger
-                System.Diagnostics.Debugger.Break();
+                Debugger.Break();
+            }
+        }
+
+        private static void RootFrame_NavigationFailed(object sender, NavigationFailedEventArgs e)
+        {
+            if (Debugger.IsAttached)
+            {
+                // A navigation has failed; break into the debugger
+                Debugger.Break();
             }
         }
 
         // Code to execute when the application is launching (eg, from Start)
         // This code will not execute when the application is reactivated
-        private void Application_Launching(object sender, LaunchingEventArgs e)
-        {
-        }
 
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
@@ -81,9 +71,6 @@ namespace TailSpin.PhoneClient
 
         // Code to execute when the application is deactivated (sent to background)
         // This code will not execute when the application is closing
-        private void Application_Deactivated(object sender, DeactivatedEventArgs e)
-        {
-        }
 
         // Code to execute when the application is closing (eg, user hit Back)
         // This code will not execute when the application is deactivated
@@ -92,9 +79,26 @@ namespace TailSpin.PhoneClient
             this.ViewModelLocator.Dispose();
         }
 
-        #region Phone application initialization
+        private void Application_Deactivated(object sender, DeactivatedEventArgs e)
+        {
+        }
+
+        private void Application_Launching(object sender, LaunchingEventArgs e)
+        {
+        }
 
         // Do not add any additional code to this method
+
+        // Do not add any additional code to this method
+        private void CompleteInitializePhoneApplication(object sender, NavigationEventArgs e)
+        {
+            // Set the root visual to allow the application to render
+            this.RootVisual = this.RootFrame;
+
+            // Remove this handler since it is no longer needed
+            this.RootFrame.Navigated -= this.CompleteInitializePhoneApplication;
+        }
+
         private void InitializePhoneApplication()
         {
             if (this.phoneApplicationInitialized)
@@ -113,17 +117,5 @@ namespace TailSpin.PhoneClient
             // Ensure we don't initialize again
             this.phoneApplicationInitialized = true;
         }
-
-        // Do not add any additional code to this method
-        private void CompleteInitializePhoneApplication(object sender, NavigationEventArgs e)
-        {
-            // Set the root visual to allow the application to render
-            this.RootVisual = this.RootFrame;
-
-            // Remove this handler since it is no longer needed
-            this.RootFrame.Navigated -= this.CompleteInitializePhoneApplication;
-        }
-
-        #endregion
     }
 }
