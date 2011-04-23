@@ -1,14 +1,4 @@
-﻿
-
-
-
-
- 
-
-
-
-
-namespace TailSpin.SimulatedIssuer
+﻿namespace TailSpin.SimulatedIssuer
 {
     using System;
     using System.Collections.Generic;
@@ -29,9 +19,48 @@ namespace TailSpin.SimulatedIssuer
         {
         }
 
+        protected override IClaimsIdentity GetOutputClaimsIdentity(IClaimsPrincipal principal, RequestSecurityToken request, Scope scope)
+        {
+            var output = new ClaimsIdentity();
+
+            if (null == principal)
+            {
+                throw new InvalidRequestException("The caller's principal is null.");
+            }
+
+            var input = (ClaimsIdentity)principal.Identity;
+            var issuer = input.Claims.First().Issuer;
+
+            switch (issuer.ToUpperInvariant())
+            {
+                case "ADATUM":
+                    var adatumClaimTypesToCopy = new[]
+                                                     {
+                                                         WSIdentityConstants.ClaimTypes.Name
+                                                     };
+                    CopyClaims(input, adatumClaimTypesToCopy, output);
+                    TransformClaims(input, AllOrganizations.ClaimTypes.Group, Adatum.Groups.MarketingManagers, ClaimTypes.Role, TailSpin.Roles.SurveyAdministrator, output);
+                    output.Claims.Add(new Claim(TailSpin.ClaimTypes.Tenant, Adatum.OrganizationName));
+                    break;
+                case "FABRIKAM":
+                    var fabrikamClaimTypesToCopy = new[]
+                                                       {
+                                                           WSIdentityConstants.ClaimTypes.Name
+                                                       };
+                    CopyClaims(input, fabrikamClaimTypesToCopy, output);
+                    TransformClaims(input, AllOrganizations.ClaimTypes.Group, Fabrikam.Groups.MarketingManagers, ClaimTypes.Role, TailSpin.Roles.SurveyAdministrator, output);
+                    output.Claims.Add(new Claim(TailSpin.ClaimTypes.Tenant, Fabrikam.OrganizationName));
+                    break;
+                default:
+                    throw new InvalidOperationException("Issuer not trusted.");
+            }
+
+            return output;
+        }
+
         protected override Scope GetScope(IClaimsPrincipal principal, RequestSecurityToken request)
         {
-            Scope scope = new Scope(request.AppliesTo.Uri.AbsoluteUri, SecurityTokenServiceConfiguration.SigningCredentials);
+            Scope scope = new Scope(request.AppliesTo.Uri.AbsoluteUri, this.SecurityTokenServiceConfiguration.SigningCredentials);
 
             string encryptingCertificateName = WebConfigurationManager.AppSettings[ApplicationSettingsNames.EncryptingCertificateName];
             if (!string.IsNullOrEmpty(encryptingCertificateName))
@@ -57,44 +86,10 @@ namespace TailSpin.SimulatedIssuer
             return scope;
         }
 
-        protected override IClaimsIdentity GetOutputClaimsIdentity(IClaimsPrincipal principal, RequestSecurityToken request, Scope scope)
+        private static void CopyClaims(IClaimsIdentity input, IEnumerable<string> claimTypes, IClaimsIdentity output)
         {
-            var output = new ClaimsIdentity();
-
-            if (null == principal)
-            {
-                throw new InvalidRequestException("The caller's principal is null.");
-            }
-
-            var input = (ClaimsIdentity)principal.Identity;
-            var issuer = input.Claims.First().Issuer;
-
-            switch (issuer.ToUpperInvariant())
-            {
-                case "ADATUM":
-                    var adatumClaimTypesToCopy = new[]
-                    {
-                        WSIdentityConstants.ClaimTypes.Name
-                    };
-                    CopyClaims(input, adatumClaimTypesToCopy, output);
-                    TransformClaims(input, AllOrganizations.ClaimTypes.Group, Adatum.Groups.MarketingManagers, ClaimTypes.Role, TailSpin.Roles.SurveyAdministrator, output);
-                    output.Claims.Add(new Claim(TailSpin.ClaimTypes.Tenant, Adatum.OrganizationName));
-                    break;
-                case "FABRIKAM":
-                    var fabrikamClaimTypesToCopy = new[]
-                    {
-                        WSIdentityConstants.ClaimTypes.Name
-                    };
-                    CopyClaims(input, fabrikamClaimTypesToCopy, output);
-                    TransformClaims(input, AllOrganizations.ClaimTypes.Group, Fabrikam.Groups.MarketingManagers, ClaimTypes.Role, TailSpin.Roles.SurveyAdministrator, output);
-                    output.Claims.Add(new Claim(TailSpin.ClaimTypes.Tenant, Fabrikam.OrganizationName));
-                    break;
-                default:
-                    throw new InvalidOperationException("Issuer not trusted.");
-            }
-
-            return output;
-        }      
+            output.Claims.CopyRange(input.Claims.Where(c => claimTypes.Contains(c.ClaimType)));
+        }
 
         private static void TransformClaims(IClaimsIdentity input, string inputClaimType, string inputClaimValue, string outputClaimType, string outputClaimValue, IClaimsIdentity output)
         {
@@ -112,11 +107,6 @@ namespace TailSpin.SimulatedIssuer
                     output.Claims.Add(new Claim(outputClaimType, outputClaimValue));
                 }
             }
-        }
-
-        private static void CopyClaims(IClaimsIdentity input, IEnumerable<string> claimTypes, IClaimsIdentity output)
-        {
-            output.Claims.CopyRange(input.Claims.Where(c => claimTypes.Contains(c.ClaimType)));
         }
     }
 }

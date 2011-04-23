@@ -1,16 +1,20 @@
 ﻿namespace TailSpin.Web.Security
 {
     using System;
+    using System.Collections.Generic;
     using System.Configuration;
     using System.Globalization;
+    using System.Linq;
     using System.Text;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Microsoft.IdentityModel.Claims;
     using Microsoft.IdentityModel.Protocols.WSFederation;
     using Microsoft.IdentityModel.Web;
     using Samples.Web.ClaimsUtillities;
     using TailSpin.Web.Controllers;
+    using AuthorizationContext = System.Web.Mvc.AuthorizationContext;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public sealed class AuthenticateAndAuthorizeAttribute : FilterAttribute, IAuthorizationFilter
@@ -29,9 +33,12 @@
                 throw new NotSupportedException("The AuthenticateAndAuthorize attribute can only be used in controllers that inherit from TenantController.");
             }
 
-            var tenantName = (string) filterContext.RouteData.Values["tenant"];
+            IClaimsPrincipal claimsPrincipal = filterContext.HttpContext.User as IClaimsPrincipal;
+            ClaimsIdentity id = claimsPrincipal.Identity as ClaimsIdentity;
+            var tenantName = id.Claims.Where(x => x.ClaimType == TailSpin.ClaimTypes.Tenant).SingleOrDefault();
+            //var tenantName =  (string) filterContext.RouteData.Values["tenant"];
             var tenantController = filterContext.Controller as TenantController;
-            var tenant = tenantController.TenantStore.GetTenant(tenantName);
+            var tenant = tenantController.TenantStore.GetTenant(tenantName.Value);
             if (tenant == null)
             {
                 throw new ArgumentException(string.Format(CultureInfo.CurrentUICulture, "'{0}' is not a valid tenant.", tenantName));

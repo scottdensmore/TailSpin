@@ -1,14 +1,4 @@
-﻿
-
-
-
-
- 
-
-
-
-
-namespace Samples.Web.ClaimsUtillities
+﻿namespace Samples.Web.ClaimsUtillities
 {
     public static class AllOrganizations
     {

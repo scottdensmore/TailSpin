@@ -12,7 +12,7 @@
     public class ClaimsAuthenticationController : Controller
     {
         private const string IdentityProviderJsonEndpoint =
-            "https://{0}.accesscontrol.windows.net:443/v2/metadata/IdentityProviders.js?protocol=wsfederation&realm={1}&reply_to=&context=&request_id=&version=1.0";
+            "https://{0}.accesscontrol.windows.net:443/v2/metadata/IdentityProviders.js?protocol=wsfederation&realm={1}&reply_to=&context=/Survey/Surveys&request_id=&version=1.0";
 
         [ValidateInput(false)]
         [HttpPost]

@@ -1,23 +1,10 @@
-﻿
-
-
-
-
- 
-
-
-
-
-namespace Samples.Web.ClaimsUtillities
+﻿namespace Samples.Web.ClaimsUtillities
 {
     public static class TailSpin
     {
         public static string TenantName
         {
-            get
-            {
-                return "TailSpin";
-            }
+            get { return "TailSpin"; }
         }
 
         public static class ClaimTypes
