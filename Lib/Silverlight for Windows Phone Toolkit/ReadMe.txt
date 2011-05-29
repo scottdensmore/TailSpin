@@ -1,2 +1,0 @@
-Place Microsoft.Phone.Controls.Toolkit.dll in this folder.
-You can download this at http://silverlight.codeplex.com/releases/view/52297 then find the assembly by Start, All Programs, Microsoft Silverlight for Windows Phone Toolkit, Binaries

@@ -1,1 +1,0 @@
-powershell.exe -file ps-scripts\Run-ScriptAsAdministrator.ps1 %CD% ps-scripts\Reset-SampleDatabaseInAzure.ps1
