@@ -9,7 +9,6 @@ Documentation
 *.tm_build_errors
 *.swp
 *~.nib
-.gitattributes
 DerivedData
 ocunit.xml
 
@@ -34,3 +33,26 @@ Thumbs.db
 
 # mstest test results
 TestResults
+
+# Modern Xcode, Visual Studio, OS, editor, and local env rules
+xcuserdata/
+*.xcuserstate
+.derivedData/
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+.vs/
+.AppleDouble
+.LSOverride
+._*
+.vscode/
+.idea/
+*.swo
+*~
+.env
+.env.*
+!.env.example
